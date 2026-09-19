@@ -27,6 +27,46 @@ Build the library:
 pnpm build
 ```
 
+Verify the release surface with a single command (finishes in well under 90
+seconds, ends with `TEMPO-VERIFY: OK` or `TEMPO-VERIFY: FAIL`, and exits
+non-zero on any failure):
+
+```bash
+pnpm verify
+```
+
+It runs five gates in order:
+
+1. **deps** — installs with `pnpm install --frozen-lockfile` and requires
+   `pnpm-lock.yaml` and the tracked `package-lock.json` to be byte-identical
+   afterwards.
+2. **build** — builds twice and requires every file in `dist/` to be
+   byte-identical between the two runs, then prints the overall digest.
+3. **exports** — derives the expected public API on the fly from
+   `src/index.ts` (runtime symbols) and `src/types.ts` (pure types), then
+   requires `dist/index.mjs`, `dist/index.cjs`, and `dist/bundle.mjs` to export
+   exactly that runtime set, and `dist/index.d.ts`, `dist/index.d.cts`, and
+   `dist/bundle.d.ts` to each cover both the runtime and the type names.
+4. **tz-matrix** — runs the full vitest suite once each under
+   `America/New_York`, `UTC`, and `Asia/Tokyo`, proving via in-process
+   timezone evidence that each run really executed in the requested zone.
+   Every run must execute the same non-zero number of tests, and the set of
+   failing tests must match `scripts/verify/tz-known-failures.json` exactly —
+   one failure more or less fails the gate.
+5. **pack** — packs the tarball exactly as `files` in `package.json` dictates,
+   requires every path referenced by `main`, `types`, `browser`, `unpkg`, and
+   `exports` to be inside it, runs `publint`, and leaves no `.tgz` behind.
+
+The timezone registry (`scripts/verify/tz-known-failures.json`) records the
+known timezone-dependent failures — currently a fixed set inside
+`addDay.spec.ts`, `diff.spec.ts`, `yearEnd.spec.ts`, and `yearStart.spec.ts`
+that fails outside `America/New_York`. It describes existing behavior; never
+edit tests to match it. Only the maintainer reviewing a change that
+intentionally alters timezone behavior may update it: run
+`TZ=<zone> npx vitest run --reporter=json` for the affected zone, hand-review
+every newly failing or newly passing test, then regenerate that zone's list in
+the same `<spec file> :: <test fullName>` format.
+
 Build the docs app:
 
 ```bash

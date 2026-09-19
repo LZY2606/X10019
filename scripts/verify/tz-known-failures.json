@@ -1,0 +1,24 @@
+{
+  "$comment": "Registry of known timezone-dependent test failures, keyed by IANA timezone. The verify script runs the full vitest suite once per timezone listed here and requires the set of failing tests to match this file exactly — one more or one fewer failure fails the gate. Only update this file when a code change intentionally alters timezone behavior: run `TZ=<zone> npx vitest run --reporter=json` for the affected zone, review every changed failure by hand, then regenerate the list. Entries use the form `<spec file> :: <vitest fullName>`.",
+  "America/New_York": [],
+  "UTC": [
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day at the beginning of the month",
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day at the end of the year",
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day by providing specified negative number of days",
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day by providing specified positive number of days",
+    "src/__tests__/diff.spec.ts :: diff does not emit mixed signs when calendar units clamp",
+    "src/__tests__/diff.spec.ts :: diff uses days instead of negative fields when weeks are skipped",
+    "src/__tests__/yearEnd.spec.ts :: yearEnd can become the end of the year",
+    "src/__tests__/yearStart.spec.ts :: yearStart can become the start of the year"
+  ],
+  "Asia/Tokyo": [
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day at the beginning of the month",
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day at the end of the year",
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day by providing specified negative number of days",
+    "src/__tests__/addDay.spec.ts :: addDay gets the next day by providing specified positive number of days",
+    "src/__tests__/diff.spec.ts :: diff does not emit mixed signs when calendar units clamp",
+    "src/__tests__/diff.spec.ts :: diff uses days instead of negative fields when weeks are skipped",
+    "src/__tests__/yearEnd.spec.ts :: yearEnd can become the end of the year",
+    "src/__tests__/yearStart.spec.ts :: yearStart can become the start of the year"
+  ]
+}
