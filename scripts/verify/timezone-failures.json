@@ -1,0 +1,25 @@
+{
+  "zones": {
+    "America/New_York": [],
+    "UTC": [
+      "src/__tests__/addDay.spec.ts > addDay gets the next day at the beginning of the month",
+      "src/__tests__/addDay.spec.ts > addDay gets the next day at the end of the year",
+      "src/__tests__/addDay.spec.ts > addDay gets the next day by providing specified negative number of days",
+      "src/__tests__/addDay.spec.ts > addDay gets the next day by providing specified positive number of days",
+      "src/__tests__/diff.spec.ts > diff does not emit mixed signs when calendar units clamp",
+      "src/__tests__/diff.spec.ts > diff uses days instead of negative fields when weeks are skipped",
+      "src/__tests__/yearEnd.spec.ts > yearEnd can become the end of the year",
+      "src/__tests__/yearStart.spec.ts > yearStart can become the start of the year"
+    ],
+    "Asia/Tokyo": [
+      "src/__tests__/addDay.spec.ts > addDay gets the next day at the beginning of the month",
+      "src/__tests__/addDay.spec.ts > addDay gets the next day at the end of the year",
+      "src/__tests__/addDay.spec.ts > addDay gets the next day by providing specified negative number of days",
+      "src/__tests__/addDay.spec.ts > addDay gets the next day by providing specified positive number of days",
+      "src/__tests__/diff.spec.ts > diff does not emit mixed signs when calendar units clamp",
+      "src/__tests__/diff.spec.ts > diff uses days instead of negative fields when weeks are skipped",
+      "src/__tests__/yearEnd.spec.ts > yearEnd can become the end of the year",
+      "src/__tests__/yearStart.spec.ts > yearStart can become the start of the year"
+    ]
+  }
+}

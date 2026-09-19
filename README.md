@@ -33,6 +33,45 @@ Build the docs app:
 pnpm docs-build
 ```
 
+Verify the release surface (dependencies, reproducible build, export surface,
+timezone matrix, packaging) with a single command:
+
+```bash
+pnpm verify
+```
+
+It runs five gates in order and always ends with `TEMPO-VERIFY: OK` (exit 0) or
+`TEMPO-VERIFY: FAIL` (exit 1):
+
+1. **dependencies** — installs with `pnpm install --frozen-lockfile` and
+   asserts `pnpm-lock.yaml` and `package-lock.json` are byte-identical before
+   and after, so the lockfiles are validated, never rewritten.
+2. **reproducible-build** — builds twice in a row and requires every file in
+   `dist/` to be byte-identical between the two runs, then prints the overall
+   digest.
+3. **export-surface** — recomputes the public API on every run from
+   `src/index.ts` (runtime symbols; `type` modifiers and `export * from
+   "./types"` contribute none) and `src/types.ts` (pure types), then requires
+   `dist/index.mjs`, `dist/index.cjs` and `dist/bundle.mjs` to export exactly
+   the runtime set, and `dist/index.d.ts`, `dist/index.d.cts` and
+   `dist/bundle.d.ts` to each declare exactly the runtime set plus the types.
+4. **timezone-matrix** — runs the full vitest suite once per zone listed in
+   `scripts/verify/timezone-failures.json` (`America/New_York`, `UTC`,
+   `Asia/Tokyo`). Each run must prove its timezone resolved correctly, execute
+   the same non-zero number of tests, and fail exactly the tests registered
+   for that zone — no more, no fewer. `America/New_York` must stay fully green.
+5. **pack** — packs the tarball per `package.json` `files`, requires every
+   path named by `main`, `types`, `browser`, `unpkg` and `exports` to be
+   inside it, runs `publint`, and leaves no tgz behind.
+
+The timezone registry in `scripts/verify/timezone-failures.json` records
+observed facts, not goals. It may only be changed by a maintainer who has
+re-run the suite under the affected timezone and reviewed every added or
+removed entry in the commit that changes it — never edit tests or assertions
+to fit the registry, and never register a failure outside `addDay.spec.ts`,
+`diff.spec.ts`, `yearEnd.spec.ts` or `yearStart.spec.ts` without a documented
+reason. The `America/New_York` list must always stay empty.
+
 <a href="https://tempo.formkit.com">
 <img src="docs/public/read-the-docs.png" alt="Read the docs" width="200" height="43">
 </a>
