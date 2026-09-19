@@ -1,0 +1,32 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/node": "^25.0.3",
+    "@vueuse/core": "^14.1.0",
+    "@vueuse/nuxt": "^14.1.0",
+    "nuxt": "^4.2.2",
+    "nuxt-fathom": "^0.0.3",
+    "vitest": "^4.0.16"
+  },
+  "dependencies": {
+    "@docsearch/js": "^4.3.2",
+    "@formkit/auto-animate": "^0.9.0",
+    "@formkit/tempo": "workspace:*",
+    "monaco-editor": "^0.55.1"
+  }
+}

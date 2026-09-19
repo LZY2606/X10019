@@ -1,0 +1,72 @@
+{
+  "name": "@formkit/tempo",
+  "version": "1.1.0",
+  "packageManager": "pnpm@10.11.0",
+  "description": "The easiest way to work with dates in JavaScript and TypeScript.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.cts",
+  "browser": "dist/bundle.mjs",
+  "unpkg": "dist/bundle.mjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "browser": {
+        "types": "./dist/bundle.d.ts",
+        "default": "./dist/bundle.mjs"
+      }
+    }
+  },
+  "homepage": "https://github.com/formkit/tempo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/formkit/tempo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/formkit/tempo/issues"
+  },
+  "scripts": {
+    "dev": "npm --prefix ./docs run dev",
+    "build": "tsup",
+    "post:build": "node scripts/size-limit/index.js || echo 'Size limit check skipped'",
+    "test": "TZ=\"America/New_York\" vitest",
+    "docs-build": "npm --prefix ./docs run build",
+    "publint": "publint",
+    "release": "pnpm build && bumpp --push",
+    "size": "npm run build && size-limit"
+  },
+  "files": [
+    "dist",
+    "docs/public/read-the-docs.png",
+    "docs/public/tempo.png"
+  ],
+  "keywords": [
+    "date",
+    "time",
+    "internationalization",
+    "date format"
+  ],
+  "author": "Justin Schroeder <justin@formkit.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@size-limit/esbuild": "^12.0.0",
+    "@size-limit/file": "^12.0.0",
+    "@size-limit/preset-small-lib": "^12.0.0",
+    "@types/node": "^25.0.3",
+    "bumpp": "^10.3.2",
+    "bytes-iec": "^3.1.1",
+    "esbuild-plugin-file-path-extensions": "^2.1.4",
+    "publint": "^0.3.16",
+    "size-limit": "^12.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  }
+}

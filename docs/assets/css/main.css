@@ -1,0 +1,399 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DocSearch styles (inlined to ensure @apply works with Tailwind) */
+input[type="search"]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type="search"]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+body.DocSearch--active::before {
+  display: none;
+}
+body.DocSearch--active::after {
+  z-index: 99;
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.DocSearch-NoResults {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-style: italic;
+}
+
+.DocSearch-NoResults-Prefill-List {
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+}
+
+.DocSearch-NoResults-Prefill-List li {
+  display: block;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+}
+.DocSearch-NoResults-Prefill-List li::before {
+  content: "•";
+  margin-left: -1em;
+  margin-right: 0.5em;
+}
+.DocSearch-NoResults-Prefill-List li button {
+  text-decoration: underline;
+  text-decoration-color: #888;
+}
+.DocSearch-NoResults-Prefill-List li button:hover {
+  text-decoration-color: #555;
+}
+.DocSearch-NoResults svg {
+  width: 1em;
+  height: auto;
+  margin-right: 0.5em;
+}
+
+button.DocSearch-Button {
+  @apply flex bg-white mb-2 p-3 border border-slate-100 shadow-sm rounded-md items-center w-full;
+  @apply dark:bg-purple-900 dark:border-purple-800;
+}
+.DocSearch-Button-Container {
+  @apply flex flex-grow gap-2 text-slate-400 items-center;
+  @apply dark:text-purple-500;
+}
+.DocSearch-Button-Placeholder {
+  @apply text-slate-400 dark:text-purple-600;
+}
+.DocSearch-Button-Keys {
+  @apply text-sm text-slate-400 border rounded flex p-0;
+  @apply dark:text-purple-400 dark:border-purple-500;
+}
+.DocSearch-Button-Key {
+  margin: 0;
+  padding: 0 0.25em;
+}
+.DocSearch-Search-Icon {
+  @apply text-slate-800;
+  @apply dark:text-purple-400;
+}
+.DocSearch-Container[role="button"] {
+  cursor: default;
+}
+.DocSearch-Container {
+  position: fixed;
+  cursor: default;
+  width: calc(100% - 4em);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 100;
+  border-radius: 0.6em;
+  max-width: 700px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+
+  @apply dark:bg-purple-950 dark:border dark:border-purple-900;
+}
+.DocSearch-SearchBar {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+
+  @apply dark:border-purple-900;
+}
+.DocSearch-Cancel {
+  display: block;
+  overflow: hidden;
+  font-size: 0;
+  width: 3em;
+  height: 2em;
+  margin-right: 1em;
+  position: relative;
+}
+.DocSearch-Cancel::before {
+  content: "esc";
+  font-size: 0.75rem;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  width: 3em;
+  height: 2em;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5em;
+  line-height: 1.8em;
+
+  @apply dark:border-purple-800 dark:text-purple-400;
+}
+.DocSearch-SearchBar form {
+  flex-grow: 1;
+  display: flex;
+  gap: 0.25em;
+  align-items: center;
+  padding: 0.75em 1em;
+  border-radius: 0.5em;
+}
+.DocSearch-MagnifierLabel {
+  @apply text-[0px] flex items-center;
+}
+.DocSearch-MagnifierLabel svg {
+  @apply w-5 h-5;
+}
+
+.DocSearch-SearchBar form input {
+  appearance: none;
+  padding: 0.25em;
+  flex-grow: 1;
+  background: transparent;
+
+  @apply dark:text-purple-100 dark:placeholder:text-purple-700;
+}
+
+.DocSearch-Dropdown {
+  padding: 0.5em 1em;
+  overflow: auto;
+  max-height: clamp(200px, 50vh, 800px);
+  @apply dark:text-purple-200;
+}
+
+.DocSearch-Dropdown:empty::before {
+  content: "Start typing to search — for example 'format', or 'parse'.";
+  padding: 1em 0;
+  display: block;
+  font-style: italic;
+}
+
+.DocSearch-Hit {
+  @apply dark:bg-white/5;
+}
+.DocSearch-Hit-Container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.DocSearch-Hit-content-wrapper {
+  flex-grow: 1;
+  margin-left: 0.5em;
+}
+.DocSearch-Hit-Container svg {
+  width: 1em;
+  height: auto;
+  fill: #888;
+}
+.DocSearch-Hit-source {
+  font-weight: bold;
+  margin-bottom: 1em;
+  padding-left: 0.5em;
+}
+.DocSearch-Hit-title {
+  display: block;
+  font-size: 15px;
+  font-weight: bold;
+}
+.DocSearch-Hit {
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+.DocSearch-Hit[aria-selected="true"] {
+  @apply bg-slate-100 dark:bg-purple-900;
+}
+
+.DocSearch-Hit-action-button {
+  @apply block p-1 hover:bg-slate-200;
+}
+
+.DocSearch-Hit-path {
+  display: block;
+  font-size: 14px;
+  color: #888;
+}
+
+.DocSearch-SearchBar form input:focus {
+  outline: none;
+}
+.DocSearch-Footer {
+  display: none;
+}
+
+.DocSearch-Reset {
+  font-size: 0;
+}
+.DocSearch-Reset svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+html {
+  @apply scroll-smooth;
+  scroll-padding: 1em;
+}
+
+body {
+  @apply text-base min-[1400px]:text-base;
+  @apply bg-slate-200;
+  @apply selection:bg-sky-500;
+  @apply selection:text-white;
+}
+html.dark body {
+  @apply bg-purple-950;
+  @apply selection:bg-fuchsia-600;
+}
+html body::before {
+  @apply h-lvh w-screen opacity-100;
+  @apply contrast-[300%];
+  @apply mix-blend-overlay;
+  @apply brightness-[100%];
+  @apply inset-0;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-image: radial-gradient(
+      circle at 50% 40%,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.35)
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 10000 10000' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+html.dark body::before {
+  @apply opacity-100;
+  @apply mix-blend-multiply;
+  @apply contrast-[150%];
+  @apply brightness-[70%];
+  @apply inset-0;
+}
+
+.monaco-editor,
+.monaco-editor .margin {
+  @apply rounded-tl-lg;
+  @apply rounded-tr-lg;
+  @apply md:rounded-tr-none;
+  @apply md:rounded-bl-lg;
+}
+.monaco-scrollable-element {
+  @apply rounded-tr-lg;
+}
+
+.page-section p {
+  @apply mb-8 leading-6 text-slate-800 lg:text-base lg:leading-8 dark:text-slate-200;
+}
+
+.page-section p code,
+.page-section ul code,
+.page-section aside code {
+  @apply rounded bg-black/10 p-1 font-mono min-[1400px]:text-base dark:border dark:border-purple-950 dark:bg-black/30 dark:text-fuchsia-300;
+}
+
+.page-section > ul {
+  @apply mb-8 pl-8 leading-7 text-slate-800 min-[1400px]:text-base;
+  @apply dark:text-slate-200;
+}
+
+.page-section > ul > li {
+  @apply mb-2 last:mb-0;
+}
+
+.jump-list a {
+  @apply block cursor-pointer rounded-lg border border-slate-300 bg-slate-50 bg-transparent p-4 transition-all duration-300 hover:bg-white hover:shadow-md;
+  @apply dark:border-purple-950 dark:bg-black/10 dark:text-gray-200 dark:hover:bg-purple-950;
+}
+
+.page-section > ul.jump-list {
+  @apply -mt-4 pl-4;
+}
+
+.page-section > ul.jump-list a {
+  @apply no-underline;
+}
+
+.page-section > ul.jump-list a strong {
+  @apply underline;
+}
+
+.page-section > ul.jump-list > li {
+  @apply mb-2;
+}
+
+.page-section h3 {
+  @apply mb-3 text-lg font-bold dark:text-gray-100;
+}
+.page-section table {
+  @apply mb-10 w-full border-separate border-spacing-0 rounded-lg border border-slate-300 text-slate-700 shadow-sm min-[1400px]:text-base;
+  @apply dark:border-purple-950 dark:text-slate-200 dark:shadow-none;
+}
+.page-section table th {
+  @apply bg-gray-50 p-3 text-left text-black;
+  @apply dark:bg-black/25 dark:text-gray-100;
+}
+.page-section table th:first-child {
+  @apply rounded-tl-lg;
+}
+.page-section table th:last-child {
+  @apply rounded-tr-lg;
+}
+
+.page-section table td {
+  @apply bg-gray-50 px-3 py-2 leading-8;
+  @apply dark:bg-black/25;
+}
+.page-section table td:first-child {
+  @apply text-black;
+}
+.page-section table tbody tr td {
+  @apply border-t border-slate-300;
+  @apply dark:border-purple-950;
+}
+.page-section table tr:nth-child(odd) td {
+  @apply bg-slate-100;
+  @apply dark:bg-black/10;
+}
+
+.page-section table tr:last-child td:first-child {
+  @apply rounded-bl-lg;
+}
+.page-section table tr:last-child td:last-child {
+  @apply rounded-br-lg;
+}
+
+.page-section table code {
+  @apply me-2 rounded bg-slate-100 p-1 font-mono min-[1400px]:text-base;
+  @apply dark:bg-purple-950 dark:text-slate-100;
+}
+.page-section table tr:nth-child(odd) code {
+  background: rgb(225, 236, 247);
+  @apply dark:bg-purple-950;
+}
+.page-section a {
+  @apply underline;
+}
+
+.monaco-editor .line-numbers {
+  opacity: 0.33;
+  font-size: 0.9rem;
+}
+.monaco-editor .line-numbers.active-line-number {
+  opacity: 0.66;
+}
+.monaco-editor .editor-scrollable {
+  margin-left: 0.5rem;
+}
